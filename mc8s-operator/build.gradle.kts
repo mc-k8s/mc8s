@@ -10,6 +10,7 @@ buildscript {
 
 plugins {
     id("java")
+    id("application")
     id("com.github.johnrengelman.shadow").version("7.1.2")
 }
 
@@ -18,6 +19,10 @@ version = "1.0-SNAPSHOT"
 
 tasks.build {
     dependsOn(tasks.shadowJar)
+}
+
+application {
+    mainClass.set("com.mc8s.operator.crd.MinecraftServerOperator")
 }
 
 tasks.shadowJar {
