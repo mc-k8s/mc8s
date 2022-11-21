@@ -68,6 +68,7 @@ public class MinecraftServerTemplateController implements Watcher<MinecraftServe
             .endMetadata()
             .withNewSpec()
             .withImagePullSecrets(resource.getSpec().getImagePullSecrets())
+            .withServiceAccountName("minecraft-controller")
             .addNewContainer()
             .withName("minecraft")
             .withImage(resource.getSpec().getImage())
