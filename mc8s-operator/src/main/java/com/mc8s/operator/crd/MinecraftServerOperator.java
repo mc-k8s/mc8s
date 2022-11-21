@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 public class MinecraftServerOperator {
   public static void main(String[] args) throws IOException {
-    KubernetesClient client = new KubernetesClientBuilder().withConfig(Config.fromKubeconfig(Files.readString(Paths.get("/home/jan/Downloads/kubeconfig_10.yml")))).build();
+    KubernetesClient client = new KubernetesClientBuilder().build();
     client.resources(MinecraftServerTemplate.class).watch(new MinecraftServerTemplateController(client));
     client.resources(Deployment.class).watch(new MinecraftServerTemplateDeploymentController(client));
   }
