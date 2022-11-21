@@ -16,9 +16,12 @@ plugins {
 group = "com.mc8s"
 version = "1.0-SNAPSHOT"
 
+tasks.build {
+    dependsOn(tasks.shadowJar)
+}
+
 tasks.shadowJar {
     mergeServiceFiles()
-    mustRunAfter("build")
 }
 
 repositories {
