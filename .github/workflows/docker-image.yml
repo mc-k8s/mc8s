@@ -35,3 +35,8 @@ jobs:
       run: cd mc8s-bungeecord && docker build . --file Dockerfile --tag w2xtfofj.gra7.container-registry.ovh.net/library/bungeecord:latest
     - name: Push the BungeeCord Docker image
       run: docker push w2xtfofj.gra7.container-registry.ovh.net/library/bungeecord:latest
+
+    - name: Build the GameServer Docker image
+      run: cd mc8s-gameserver && docker build . --file Dockerfile --tag w2xtfofj.gra7.container-registry.ovh.net/library/gameserver:latest
+    - name: Push the GameServer Docker image
+      run: docker push w2xtfofj.gra7.container-registry.ovh.net/library/gameserver:latest
