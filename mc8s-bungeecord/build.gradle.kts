@@ -33,7 +33,6 @@ repositories {
 
 dependencies {
     implementation(project(":mc8s-classfilter"))
-    implementation(project(":mc8s-kubernetes-bridge"))
     implementation("com.google.inject:guice:5.1.0")
     implementation("com.google.guava:guava:31.1-jre")
     implementation("io.fabric8:kubernetes-httpclient-okhttp:6.2.0")

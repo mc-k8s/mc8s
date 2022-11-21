@@ -11,18 +11,7 @@ import java.util.List;
 @Singleton
 @Configuration(filename = "config")
 public class BungeeConfiguration extends Config {
-  private String controllerHostname = "127.0.0.1";
-  private int controllerPort = 61153;
   private List<String> lobbyCommands = Arrays.asList("lobby", "l", "hub");
-
-  public String getControllerHostname() {
-    return controllerHostname;
-  }
-
-  public int getControllerPort() {
-    return controllerPort;
-  }
-
   public List<String> getLobbyCommands() {
     return lobbyCommands;
   }

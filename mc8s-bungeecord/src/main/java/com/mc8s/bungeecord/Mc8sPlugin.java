@@ -4,10 +4,9 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.name.Names;
-import com.mc8s.bridge.Mc8sBridgeController;
-import com.mc8s.bridge.event.PodWatcher;
 import com.mc8s.bungeecord.configuration.entry.BungeeConfiguration;
 import com.mc8s.bungeecord.configuration.procedure.ConfigurationRegisterProcedure;
+import com.mc8s.bungeecord.server.PodWatcher;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
@@ -61,6 +60,14 @@ public class Mc8sPlugin extends Plugin {
     }
 
     public void onEnable() {
+        injector
+                .getInstance(PodWatcher.class)
+                .getGameServers()
+                .entrySet().stream()
+                    .filter(entry -> entry.getValue().getType().equals("LOBBY"))
+                .forEach(entry ->
+                    System.out.println("LOBBY-SERVER: " + entry.getKey().toString())
+                );
     }
 
     public void onDisable() {
