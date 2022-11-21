@@ -26,7 +26,7 @@ jobs:
       with:
         arguments: build
     - name: Login to Docker registry
-      run: echo $DOCKER_USERNAME $DOCKER_PASSWORD #docker login w2xtfofj.gra7.container-registry.ovh.net/library/ -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      run: docker login w2xtfofj.gra7.container-registry.ovh.net/library/ -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
     - name: Build the Docker image
       run: cd mc8s-bungeecord && docker build . --file Dockerfile --tag w2xtfofj.gra7.container-registry.ovh.net/library/bungeecord:latest
     - name: Push the Docker image
