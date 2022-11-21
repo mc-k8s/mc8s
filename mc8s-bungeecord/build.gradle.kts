@@ -18,6 +18,7 @@ version = "1.0-SNAPSHOT"
 
 tasks.shadowJar {
     mergeServiceFiles()
+    mustRunAfter("build")
 }
 
 repositories {
