@@ -1,0 +1,17 @@
+plugins {
+    id 'java'
+}
+
+group 'com.mc8s'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("com.google.inject:guice:5.1.0")
+    implementation("com.google.guava:guava:31.1-jre")
+    implementation("io.fabric8:kubernetes-httpclient-okhttp:6.2.0")
+    implementation("io.fabric8:crd-generator-apt:6.2.0")
+}
