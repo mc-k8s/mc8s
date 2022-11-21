@@ -21,7 +21,7 @@ jobs:
         distribution: 'temurin'
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
-    - name: Build with Gradle
+    - name: Build BungeeCord Plugin with Gradle
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
@@ -31,7 +31,7 @@ jobs:
         registry: ${{ secrets.DOCKER_REGISTRY }}
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-    - name: Build the Docker image
+    - name: Build the BungeeCord Docker image
       run: cd mc8s-bungeecord && docker build . --file Dockerfile --tag w2xtfofj.gra7.container-registry.ovh.net/library/bungeecord:latest
-    - name: Push the Docker image
+    - name: Push the BungeeCord Docker image
       run: docker push w2xtfofj.gra7.container-registry.ovh.net/library/bungeecord:latest
