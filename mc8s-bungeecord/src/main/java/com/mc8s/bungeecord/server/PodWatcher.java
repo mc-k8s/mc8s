@@ -28,6 +28,11 @@ public class PodWatcher implements Watcher<Pod> {
         }
 
         if (action.equals(Action.ADDED) || action.equals(Action.MODIFIED)) {
+            if (!resource.getStatus().getPhase().equalsIgnoreCase("Running")) {
+                this.gameServers.remove(UUID.fromString(resource.getMetadata().getUid()));
+                return;
+            }
+
             if (resource.getStatus().getPodIPs().isEmpty()) return;
 
             resource.getSpec().getContainers().stream()
