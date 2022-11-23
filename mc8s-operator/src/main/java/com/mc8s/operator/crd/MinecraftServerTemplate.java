@@ -34,6 +34,17 @@ public class MinecraftServerTemplate extends CustomResource<MinecraftServerTempl
     @JsonProperty("endDisabled")
     private boolean endDisabled = true;
 
+    @JsonProperty("mapTemplatePVCName")
+    private String mapTemplatePVCName;
+
+    public String getMapTemplatePVCName(){
+      return this.mapTemplatePVCName;
+    }
+
+    public void setMapTemplatePVCName(String mapTemplatePVCName) {
+      this.mapTemplatePVCName = mapTemplatePVCName;
+    }
+
     public String getImage() {
       return image;
     }
