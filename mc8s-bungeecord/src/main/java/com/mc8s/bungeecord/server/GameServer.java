@@ -17,6 +17,7 @@ public class GameServer {
         this.type = type;
         this.address = address;
         this.state = ServerState.STARTING;
+        System.out.println("CREATED GAMESERVER");
     }
 
     public GameServer(String type, ServerState state, InetSocketAddress address) {

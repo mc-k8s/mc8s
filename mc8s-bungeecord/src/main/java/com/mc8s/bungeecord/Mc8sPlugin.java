@@ -64,7 +64,7 @@ public class Mc8sPlugin extends Plugin {
                 .getInstance(PodWatcher.class)
                 .getGameServers()
                 .entrySet().stream()
-                    .filter(entry -> entry.getValue().getType().equals("LOBBY"))
+                    .filter(entry -> entry.getValue().getType().equalsIgnoreCase("lobby"))
                 .forEach(entry ->
                     System.out.println("LOBBY-SERVER: " + entry.getKey().toString())
                 );

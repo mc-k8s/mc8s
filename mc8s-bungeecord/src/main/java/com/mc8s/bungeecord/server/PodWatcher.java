@@ -23,7 +23,9 @@ public class PodWatcher implements Watcher<Pod> {
 
     @Override
     public void eventReceived(Action action, Pod resource) {
-        if (!resource.getMetadata().getLabels().containsKey("minecraft-template-name")){ return; }
+        if (!resource.getMetadata().getLabels().containsKey("minecraft-template-name")) {
+            return;
+        }
 
         if (action.equals(Action.ADDED)) {
             resource.getSpec().getContainers().stream()
