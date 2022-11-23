@@ -28,6 +28,12 @@ public class MinecraftServerTemplate extends CustomResource<MinecraftServerTempl
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<LocalObjectReference> imagePullSecrets = new ArrayList<>();
 
+    @JsonProperty("netherDisabled")
+    private boolean netherDisabled = true;
+
+    @JsonProperty("endDisabled")
+    private boolean endDisabled = true;
+
     public String getImage() {
       return image;
     }
@@ -36,12 +42,26 @@ public class MinecraftServerTemplate extends CustomResource<MinecraftServerTempl
       return replicas;
     }
 
+    public boolean isNetherDisabled() {return this.netherDisabled; }
+
+    public void setNetherDisabled(boolean netherDisabled){
+      this.netherDisabled = netherDisabled;
+    }
+
     public String getImagePullPolicy() {
       return imagePullPolicy;
     }
 
     public List<LocalObjectReference> getImagePullSecrets() {
       return imagePullSecrets;
+    }
+
+    public boolean isEndDisabled() {
+      return endDisabled;
+    }
+
+    public void setEndDisabled(boolean endDisabled) {
+      this.endDisabled = endDisabled;
     }
   }
 
