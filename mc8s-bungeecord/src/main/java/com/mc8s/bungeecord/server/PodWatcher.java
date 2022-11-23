@@ -27,15 +27,21 @@ public class PodWatcher implements Watcher<Pod> {
             return;
         }
 
-        if (action.equals(Action.ADDED)) {
+        if (action.equals(Action.ADDED) || action.equals(Action.MODIFIED)) {
+            if (resource.getStatus().getPodIPs().isEmpty()) return;
+
             resource.getSpec().getContainers().stream()
                     .filter(container -> container.getPorts().stream().anyMatch(port -> port.getName().equals("minecraft"))).flatMap(container -> container.getPorts().stream())
-                    .forEach(port ->
-                            this.gameServers.put(
-                                    UUID.fromString(resource.getMetadata().getUid()),
-                                    new GameServer(resource.getMetadata().getLabels().get("minecraft-template-name"), new InetSocketAddress(resource.getStatus().getPodIP(), port.getContainerPort()))
-                            ));
-        } else if(action.equals(Action.DELETED)){
+                    .forEach(port -> {
+                        this.gameServers.put(
+                                UUID.fromString(resource.getMetadata().getUid()),
+                                new GameServer(
+                                        resource.getMetadata().getLabels().get("minecraft-template-name"),
+                                        new InetSocketAddress(resource.getStatus().getPodIP(), port.getContainerPort())
+                                )
+                        );
+                    });
+        } else if (action.equals(Action.DELETED)) {
             this.gameServers.remove(UUID.fromString(resource.getMetadata().getUid()));
         }
     }
