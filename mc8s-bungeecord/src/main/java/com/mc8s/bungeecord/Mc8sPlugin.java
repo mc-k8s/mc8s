@@ -6,6 +6,7 @@ import com.google.inject.Injector;
 import com.google.inject.name.Names;
 import com.mc8s.bungeecord.configuration.entry.BungeeConfiguration;
 import com.mc8s.bungeecord.configuration.procedure.ConfigurationRegisterProcedure;
+import com.mc8s.bungeecord.lobby.AdvancedReconnectHandler;
 import com.mc8s.bungeecord.server.PodWatcher;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.client.KubernetesClient;
@@ -45,6 +46,8 @@ public class Mc8sPlugin extends Plugin {
                         });
 
         kubernetesClient.resources(Pod.class).watch(injector.getInstance(PodWatcher.class));
+        this.getProxy().setReconnectHandler(injector.getInstance(AdvancedReconnectHandler.class));
+
         injector
                 .getInstance(ConfigurationRegisterProcedure.class)
                 .initialize(this.getClass().getPackage().getName());
