@@ -64,10 +64,8 @@ public class PodWatcher implements Watcher<Pod> {
                             this.proxyServer.getServers().put(serverInfo.getName(), serverInfo);
                         }
                     });
-            System.out.println("Current Lobby-count: " + this.getGameServers().entrySet().stream().filter(entry -> entry.getValue().getType().equalsIgnoreCase("LOBBY")).count());
         } else if (action.equals(Action.DELETED)) {
             this.gameServers.remove(UUID.fromString(resource.getMetadata().getUid()));
-            System.out.println("Current Lobby-count: " + this.getGameServers().entrySet().stream().filter(entry -> entry.getValue().getType().equalsIgnoreCase("LOBBY")).count());
         }
     }
 
