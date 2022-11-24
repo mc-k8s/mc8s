@@ -33,7 +33,7 @@ public class OnlineUserController implements Listener {
     public synchronized void updatePlayerCount() {
         this.kubernetesClient.resources(Pod.class).inAnyNamespace().withField("metadata.name", System.getenv("HOSTNAME")).list().getItems().forEach(pod -> {
             pod.getStatus().setAdditionalProperty("current-users", this.proxyServer.getOnlineCount());
-            this.kubernetesClient.resources(Pod.class).resource(pod).createOrReplace();
+            this.kubernetesClient.resources(Pod.class).resource(pod).patchStatus();
         });
     }
 
