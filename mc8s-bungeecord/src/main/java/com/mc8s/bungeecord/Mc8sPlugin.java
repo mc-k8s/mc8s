@@ -8,6 +8,7 @@ import com.mc8s.bungeecord.configuration.entry.BungeeConfiguration;
 import com.mc8s.bungeecord.configuration.procedure.ConfigurationRegisterProcedure;
 import com.mc8s.bungeecord.lobby.AdvancedReconnectHandler;
 import com.mc8s.bungeecord.server.PodWatcher;
+import com.mc8s.bungeecord.user.OnlineUserController;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientBuilder;
@@ -47,6 +48,7 @@ public class Mc8sPlugin extends Plugin {
 
         kubernetesClient.resources(Pod.class).watch(injector.getInstance(PodWatcher.class));
         this.getProxy().setReconnectHandler(injector.getInstance(AdvancedReconnectHandler.class));
+        this.getProxy().getPluginManager().registerListener(this, injector.getInstance(OnlineUserController.class));
 
         injector
                 .getInstance(ConfigurationRegisterProcedure.class)
@@ -63,14 +65,7 @@ public class Mc8sPlugin extends Plugin {
     }
 
     public void onEnable() {
-        injector
-                .getInstance(PodWatcher.class)
-                .getGameServers()
-                .entrySet().stream()
-                    .filter(entry -> entry.getValue().getType().equalsIgnoreCase("lobby"))
-                .forEach(entry ->
-                    System.out.println("LOBBY-SERVER: " + entry.getKey().toString())
-                );
+
     }
 
     public void onDisable() {
