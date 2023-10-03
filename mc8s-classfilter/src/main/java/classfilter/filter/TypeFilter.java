@@ -3,7 +3,9 @@ package classfilter.filter;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 
-/** @author Aventix created at: 21.07.2019 */
+/**
+ * @author Aventix created at: 21.07.2019
+ */
 public interface TypeFilter {
   boolean matches(Class<?> clazz);
 

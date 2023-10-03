@@ -22,7 +22,12 @@ public class MinecraftServerTemplateDeploymentController implements Watcher<Depl
   public void eventReceived(Action action, Deployment resource) {
     if (action == Action.ADDED) {
       if (Objects.equals(resource.getMetadata().getLabels().get("app"), "minecraft-lobby")) {
-        if (client.resources(MinecraftServerTemplate.class).inNamespace(resource.getMetadata().getNamespace()).withName(resource.getMetadata().getName()).get() == null) {
+        if (client
+                .resources(MinecraftServerTemplate.class)
+                .inNamespace(resource.getMetadata().getNamespace())
+                .withName(resource.getMetadata().getName())
+                .get()
+            == null) {
           client.resources(Deployment.class).resource(resource).delete();
         }
       }
@@ -30,7 +35,5 @@ public class MinecraftServerTemplateDeploymentController implements Watcher<Depl
   }
 
   @Override
-  public void onClose(WatcherException cause) {
-
-  }
+  public void onClose(WatcherException cause) {}
 }

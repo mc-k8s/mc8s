@@ -15,7 +15,9 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-/** @author Aventix created at: 14.03.2020 03:13 */
+/**
+ * @author Aventix created at: 14.03.2020 03:13
+ */
 @Singleton
 public class MethodSearcher {
   private final Injector injector;
@@ -34,7 +36,8 @@ public class MethodSearcher {
       return (packageNames.length == 0
               ? classPath.getAllClasses()
               : Arrays.stream(packageNames)
-              .flatMap(name -> classPath.getTopLevelClassesRecursive(name).stream()).toList())
+                  .flatMap(name -> classPath.getTopLevelClassesRecursive(name).stream())
+                  .toList())
           .stream()
               .map(
                   classInfo -> {

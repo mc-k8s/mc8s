@@ -12,12 +12,10 @@ import java.util.List;
  */
 @Singleton
 public class Mc8sBridgeController {
-    private final KubernetesClient kubernetesClient;
+  private final KubernetesClient kubernetesClient;
 
-    @Inject
-    public Mc8sBridgeController(KubernetesClient kubernetesClient) {
-        this.kubernetesClient = kubernetesClient;
-    }
-
-
+  @Inject
+  public Mc8sBridgeController(KubernetesClient kubernetesClient) {
+    this.kubernetesClient = kubernetesClient;
+  }
 }

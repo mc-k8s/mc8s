@@ -21,54 +21,60 @@ import net.md_5.bungee.api.plugin.PluginLogger;
  * @author Aventix created at: 20.11.2022
  */
 public class Mc8sPlugin extends Plugin {
-    private static Mc8sPlugin instance = null;
-    private static Injector injector = null;
+  private static Mc8sPlugin instance = null;
+  private static Injector injector = null;
 
-    public static Mc8sPlugin getInstance() {return instance;}
+  public static Mc8sPlugin getInstance() {
+    return instance;
+  }
 
-    public static Injector getInjector() {return injector;}
+  public static Injector getInjector() {
+    return injector;
+  }
 
-    public void onLoad() {
-        Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
-        KubernetesClient kubernetesClient = new KubernetesClientBuilder().build();
-        instance = this;
-        injector =
-                Guice.createInjector(
-                        new AbstractModule() {
-                            @Override
-                            protected void configure() {
-                                bind(KubernetesClient.class).toInstance(kubernetesClient);
-                                bind(ClassLoader.class)
-                                        .annotatedWith(Names.named("SearcherClassLoader"))
-                                        .toInstance(Mc8sPlugin.class.getClassLoader());
-                                bind(PluginLogger.class).toInstance((PluginLogger) Mc8sPlugin.this.getLogger());
-                                bind(ProxyServer.class).toInstance(Mc8sPlugin.this.getProxy());
-                            }
-                        });
+  public void onLoad() {
+    Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+    KubernetesClient kubernetesClient = new KubernetesClientBuilder().build();
+    instance = this;
+    injector =
+        Guice.createInjector(
+            new AbstractModule() {
+              @Override
+              protected void configure() {
+                bind(KubernetesClient.class).toInstance(kubernetesClient);
+                bind(ClassLoader.class)
+                    .annotatedWith(Names.named("SearcherClassLoader"))
+                    .toInstance(Mc8sPlugin.class.getClassLoader());
+                bind(PluginLogger.class).toInstance((PluginLogger) Mc8sPlugin.this.getLogger());
+                bind(ProxyServer.class).toInstance(Mc8sPlugin.this.getProxy());
+              }
+            });
 
-        kubernetesClient.resources(Pod.class).watch(injector.getInstance(PodWatcher.class));
-        this.getProxy().setReconnectHandler(injector.getInstance(AdvancedReconnectHandler.class));
-        this.getProxy().getPluginManager().registerListener(this, injector.getInstance(OnlineUserController.class));
+    injector
+        .getInstance(ConfigurationRegisterProcedure.class)
+        .initialize(this.getClass().getPackage().getName());
 
-        injector
-                .getInstance(ConfigurationRegisterProcedure.class)
-                .initialize(this.getClass().getPackage().getName());
+    BungeeConfiguration configuration = injector.getInstance(BungeeConfiguration.class);
+    /*if (!configuration.getLobbyCommands().isEmpty())
+    this.getProxy()
+            .getPluginManager()
+            .registerCommand(
+                    this,
+                    new LobbyCommand(
+                            configuration, messageHandler, injector.getInstance(ServerRegistry.class)));*/
+  }
 
-        BungeeConfiguration configuration = injector.getInstance(BungeeConfiguration.class);
-        /*if (!configuration.getLobbyCommands().isEmpty())
-            this.getProxy()
-                    .getPluginManager()
-                    .registerCommand(
-                            this,
-                            new LobbyCommand(
-                                    configuration, messageHandler, injector.getInstance(ServerRegistry.class)));*/
-    }
+  public void onEnable() {
+    injector
+        .getInstance(KubernetesClient.class)
+        .resources(Pod.class)
+        .watch(injector.getInstance(PodWatcher.class));
+    this.getProxy().setReconnectHandler(injector.getInstance(AdvancedReconnectHandler.class));
+    this.getProxy()
+        .getPluginManager()
+        .registerListener(this, injector.getInstance(OnlineUserController.class));
+    injector.getInstance(OnlineUserController.class).updatePlayerCount();
+  }
 
-    public void onEnable() {
-
-    }
-
-    public void onDisable() {
-
-    }
+  public void onDisable() {}
 }

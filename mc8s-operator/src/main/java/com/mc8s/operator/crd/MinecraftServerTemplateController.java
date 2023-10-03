@@ -18,14 +18,17 @@ public class MinecraftServerTemplateController implements Watcher<MinecraftServe
     this.client = client;
   }
 
-
   @Override
   public void eventReceived(Action action, MinecraftServerTemplate resource) {
     try {
       if (action == Action.ADDED || action == Action.MODIFIED) {
         client.resources(Deployment.class).resource(createDeployment(resource)).createOrReplace();
       } else if (action == Action.DELETED) {
-        client.resources(Deployment.class).inNamespace(resource.getMetadata().getNamespace()).withName(resource.getMetadata().getName()).delete();
+        client
+            .resources(Deployment.class)
+            .inNamespace(resource.getMetadata().getNamespace())
+            .withName(resource.getMetadata().getName())
+            .delete();
       }
     } catch (Exception ex) {
       ex.printStackTrace();
@@ -40,7 +43,8 @@ public class MinecraftServerTemplateController implements Watcher<MinecraftServe
   }
 
   public void addMetaData(DeploymentBuilder builder, MinecraftServerTemplate resource) {
-    builder.withNewMetadata()
+    builder
+        .withNewMetadata()
         .withName(resource.getMetadata().getName())
         .withNamespace(resource.getMetadata().getNamespace())
         .addToLabels("minecraft-template-name", resource.getMetadata().getName())
@@ -58,54 +62,51 @@ public class MinecraftServerTemplateController implements Watcher<MinecraftServe
   public void addSpec(DeploymentBuilder builder, MinecraftServerTemplate resource) {
     builder
         .withNewSpec()
-          .withReplicas(resource.getSpec().getReplicas())
-          .withNewSelector()
-           .addToMatchLabels("minecraft-template-name", resource.getMetadata().getName())
-          .endSelector()
-          .withNewTemplate()
-            .withNewMetadata()
-            .addToLabels("minecraft-template-name", resource.getMetadata().getName())
-            .endMetadata()
-            .withNewSpec()
-            .withImagePullSecrets(resource.getSpec().getImagePullSecrets())
-            .withServiceAccountName("minecraft-controller")
-            .addNewVolume()
-            .withName("map-template")
-            .withNewPersistentVolumeClaim()
-            .withClaimName(resource.getSpec().getMapTemplatePVCName())
-            .endPersistentVolumeClaim()
-            .endVolume()
-            .addNewContainer()
-            .withName("minecraft")
-            .withImage(resource.getSpec().getImage())
-            .withImagePullPolicy(resource.getSpec().getImagePullPolicy())
-            .addNewEnv()
-            .withName("MC8S_DISABLE_END")
-            .withValue(String.valueOf(resource.getSpec().isEndDisabled()))
-            .endEnv()
-            .addNewEnv()
-            .withName("MC8S_DISABLE_NETHER")
-            .withValue(String.valueOf(resource.getSpec().isNetherDisabled()))
-            .endEnv()
-            .addNewPort()
-            .withName("minecraft")
-            .withContainerPort(25565)
-            .withProtocol("TCP")
-            .endPort()
-            .addNewVolumeMount()
-            .withMountPath("/var/map-template")
-            .withName("map-template")
-            .withReadOnly(true)
-            .endVolumeMount()
-            .endContainer()
-            .endSpec()
-          .endTemplate()
+        .withReplicas(resource.getSpec().getReplicas())
+        .withNewSelector()
+        .addToMatchLabels("minecraft-template-name", resource.getMetadata().getName())
+        .endSelector()
+        .withNewTemplate()
+        .withNewMetadata()
+        .addToLabels("minecraft-template-name", resource.getMetadata().getName())
+        .endMetadata()
+        .withNewSpec()
+        .withImagePullSecrets(resource.getSpec().getImagePullSecrets())
+        .withServiceAccountName("minecraft-controller")
+        .addNewVolume()
+        .withName("map-template")
+        .withNewPersistentVolumeClaim()
+        .withClaimName(resource.getSpec().getMapTemplatePVCName())
+        .endPersistentVolumeClaim()
+        .endVolume()
+        .addNewContainer()
+        .withName("minecraft")
+        .withImage(resource.getSpec().getImage())
+        .withImagePullPolicy(resource.getSpec().getImagePullPolicy())
+        .addNewEnv()
+        .withName("MC8S_DISABLE_END")
+        .withValue(String.valueOf(resource.getSpec().isEndDisabled()))
+        .endEnv()
+        .addNewEnv()
+        .withName("MC8S_DISABLE_NETHER")
+        .withValue(String.valueOf(resource.getSpec().isNetherDisabled()))
+        .endEnv()
+        .addNewPort()
+        .withName("minecraft")
+        .withContainerPort(25565)
+        .withProtocol("TCP")
+        .endPort()
+        .addNewVolumeMount()
+        .withMountPath("/var/map-template")
+        .withName("map-template")
+        .withReadOnly(true)
+        .endVolumeMount()
+        .endContainer()
+        .endSpec()
+        .endTemplate()
         .endSpec();
   }
 
   @Override
-  public void onClose(WatcherException cause) {
-
-  }
-
+  public void onClose(WatcherException cause) {}
 }

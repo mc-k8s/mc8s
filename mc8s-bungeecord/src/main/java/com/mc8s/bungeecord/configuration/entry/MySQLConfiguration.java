@@ -4,7 +4,9 @@ import com.google.inject.Singleton;
 import com.mc8s.bungeecord.configuration.Config;
 import com.mc8s.bungeecord.configuration.Configuration;
 
-/** @author Aventix created at: 20.07.2019 */
+/**
+ * @author Aventix created at: 20.07.2019
+ */
 @Singleton
 @Configuration(filename = "mysql")
 public class MySQLConfiguration extends Config {

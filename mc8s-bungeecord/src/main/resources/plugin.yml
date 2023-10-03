@@ -1,4 +1,4 @@
 main: com.mc8s.bungeecord.Mc8sPlugin
 name: Mc8-Connector
-authors: ['Aventix', 'DevTastisch']
+authors: [ 'Aventix', 'DevTastisch' ]
 version: 1.0.0-SNAPSHOT

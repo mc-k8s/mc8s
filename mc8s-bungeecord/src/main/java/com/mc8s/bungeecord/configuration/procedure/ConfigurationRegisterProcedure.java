@@ -11,7 +11,9 @@ import com.mc8s.bungeecord.configuration.Config;
 import com.mc8s.bungeecord.configuration.Configuration;
 import com.mc8s.bungeecord.configuration.type.ConfigurationType;
 
-/** @author Aventix created at: 14.07.2019 */
+/**
+ * @author Aventix created at: 14.07.2019
+ */
 @Singleton
 public class ConfigurationRegisterProcedure {
   private final TypeSearcher typeSearcher;

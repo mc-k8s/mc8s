@@ -12,7 +12,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-/** @author Aventix created at: 14.03.2020 03:14 */
+/**
+ * @author Aventix created at: 14.03.2020 03:14
+ */
 @Singleton
 public class TypeSearcher {
   public Stream<? extends Class<?>> filter(
@@ -25,7 +27,8 @@ public class TypeSearcher {
       return (packageNames.size() == 0
               ? classPath.getAllClasses()
               : packageNames.stream()
-              .flatMap(name -> classPath.getTopLevelClassesRecursive(name).stream()).toList())
+                  .flatMap(name -> classPath.getTopLevelClassesRecursive(name).stream())
+                  .toList())
           .stream()
               .map(
                   classInfo -> {

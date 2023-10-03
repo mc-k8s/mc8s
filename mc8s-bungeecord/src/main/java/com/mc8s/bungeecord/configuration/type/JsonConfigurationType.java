@@ -10,7 +10,9 @@ import com.mc8s.bungeecord.configuration.Configuration;
 import java.io.*;
 import java.lang.reflect.Field;
 
-/** @author Aventix created at: 20.07.2019 */
+/**
+ * @author Aventix created at: 20.07.2019
+ */
 public class JsonConfigurationType implements ConfigurationType {
   private final Injector injector;
 
@@ -61,11 +63,11 @@ public class JsonConfigurationType implements ConfigurationType {
   public void onSave(Class<? extends Config> clazz) {
     Configuration annotation = clazz.getAnnotation(Configuration.class);
     File file;
-      if (!annotation.path().isEmpty()) {
-          file = new File("./" + annotation.path(), annotation.filename() + "." + this.fileExtension());
-      } else {
-          file = new File(".", annotation.filename() + "." + this.fileExtension());
-      }
+    if (!annotation.path().isEmpty()) {
+      file = new File("./" + annotation.path(), annotation.filename() + "." + this.fileExtension());
+    } else {
+      file = new File(".", annotation.filename() + "." + this.fileExtension());
+    }
 
     if (!file.exists() && !file.mkdirs()) {
       System.out.println("Can't create folder!");

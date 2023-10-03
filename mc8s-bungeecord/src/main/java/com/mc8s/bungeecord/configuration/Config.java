@@ -4,7 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.mc8s.bungeecord.configuration.type.ConfigurationType;
 
-/** @author Aventix created at: 14.07.2019 */
+/**
+ * @author Aventix created at: 14.07.2019
+ */
 public class Config {
   @Inject private transient Injector injector;
 

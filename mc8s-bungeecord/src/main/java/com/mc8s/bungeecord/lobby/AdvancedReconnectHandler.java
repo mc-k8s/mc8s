@@ -18,35 +18,34 @@ import java.util.UUID;
  */
 @Singleton
 public class AdvancedReconnectHandler implements ReconnectHandler {
-    private final PodWatcher podWatcher;
-    private final ProxyServer proxyServer;
+  private final PodWatcher podWatcher;
+  private final ProxyServer proxyServer;
 
-    @Inject
-    public AdvancedReconnectHandler(PodWatcher podWatcher, ProxyServer proxyServer) {
-        this.podWatcher = podWatcher;
-        this.proxyServer = proxyServer;
-    }
+  @Inject
+  public AdvancedReconnectHandler(PodWatcher podWatcher, ProxyServer proxyServer) {
+    this.podWatcher = podWatcher;
+    this.proxyServer = proxyServer;
+  }
 
-    @Override
-    public ServerInfo getServer(ProxiedPlayer player) {
-        Optional<Map.Entry<UUID, GameServer>> optionalLobby = podWatcher.getGameServers().entrySet().stream().filter(entry -> entry.getValue().getType().equalsIgnoreCase("LOBBY")).findFirst();
-        return optionalLobby
-                .map(uuidGameServerEntry -> this.proxyServer.getServerInfo(uuidGameServerEntry.getKey().toString()))
-                .orElse(null);
-    }
+  @Override
+  public ServerInfo getServer(ProxiedPlayer player) {
+    Optional<Map.Entry<UUID, GameServer>> optionalLobby =
+        podWatcher.getGameServers().entrySet().stream()
+            .filter(entry -> entry.getValue().getType().equalsIgnoreCase("LOBBY"))
+            .findFirst();
+    return optionalLobby
+        .map(
+            uuidGameServerEntry ->
+                this.proxyServer.getServerInfo(uuidGameServerEntry.getKey().toString()))
+        .orElse(null);
+  }
 
-    @Override
-    public void setServer(ProxiedPlayer player) {
+  @Override
+  public void setServer(ProxiedPlayer player) {}
 
-    }
+  @Override
+  public void save() {}
 
-    @Override
-    public void save() {
-
-    }
-
-    @Override
-    public void close() {
-
-    }
+  @Override
+  public void close() {}
 }

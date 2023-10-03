@@ -13,24 +13,22 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class PodWatcher implements Watcher<Pod> {
-    private final Mc8sBridgeController bridgeController;
+  private final Mc8sBridgeController bridgeController;
 
-    @Inject
-    public PodWatcher(Mc8sBridgeController bridgeController) {
-        this.bridgeController = bridgeController;
-    }
+  @Inject
+  public PodWatcher(Mc8sBridgeController bridgeController) {
+    this.bridgeController = bridgeController;
+  }
 
-    @Override
-    public void eventReceived(Action action, Pod resource) {
-        System.out.println(action.name().toUpperCase());
-        System.out.println(resource.getStatus());
-        System.out.println(resource.getFullResourceName());
-        System.out.println(resource.getSpec().getContainers().size());
-        System.out.println(resource.getSpec().getContainers().get(0).getPorts().get(0));
-    }
+  @Override
+  public void eventReceived(Action action, Pod resource) {
+    System.out.println(action.name().toUpperCase());
+    System.out.println(resource.getStatus());
+    System.out.println(resource.getFullResourceName());
+    System.out.println(resource.getSpec().getContainers().size());
+    System.out.println(resource.getSpec().getContainers().get(0).getPorts().get(0));
+  }
 
-    @Override
-    public void onClose(WatcherException cause) {
-
-    }
+  @Override
+  public void onClose(WatcherException cause) {}
 }

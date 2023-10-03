@@ -13,7 +13,9 @@ import java.util.List;
 
 @Version("v1alpha1")
 @Group("com.mc8s.operator")
-public class MinecraftServerTemplate extends CustomResource<MinecraftServerTemplate.Spec, MinecraftServerTemplate.Status> implements Namespaced {
+public class MinecraftServerTemplate
+    extends CustomResource<MinecraftServerTemplate.Spec, MinecraftServerTemplate.Status>
+    implements Namespaced {
   public static class Spec {
     @JsonProperty("image")
     private String image;
@@ -37,7 +39,7 @@ public class MinecraftServerTemplate extends CustomResource<MinecraftServerTempl
     @JsonProperty("mapTemplatePVCName")
     private String mapTemplatePVCName;
 
-    public String getMapTemplatePVCName(){
+    public String getMapTemplatePVCName() {
       return this.mapTemplatePVCName;
     }
 
@@ -53,9 +55,11 @@ public class MinecraftServerTemplate extends CustomResource<MinecraftServerTempl
       return replicas;
     }
 
-    public boolean isNetherDisabled() {return this.netherDisabled; }
+    public boolean isNetherDisabled() {
+      return this.netherDisabled;
+    }
 
-    public void setNetherDisabled(boolean netherDisabled){
+    public void setNetherDisabled(boolean netherDisabled) {
       this.netherDisabled = netherDisabled;
     }
 
@@ -76,7 +80,5 @@ public class MinecraftServerTemplate extends CustomResource<MinecraftServerTempl
     }
   }
 
-  public static class Status {
-
-  }
+  public static class Status {}
 }
