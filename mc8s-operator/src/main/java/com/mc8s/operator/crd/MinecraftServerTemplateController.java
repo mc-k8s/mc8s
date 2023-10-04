@@ -21,7 +21,7 @@ public class MinecraftServerTemplateController implements Watcher<MinecraftServe
   @Override
   public void eventReceived(Action action, MinecraftServerTemplate resource) {
     try {
-      if (action == Action.ADDED || action == Action.MODIFIED) {
+      if (action == Action.ADDED || action == Action.MODIFIED) {;
         client.resources(Deployment.class).resource(createDeployment(resource)).createOrReplace();
       } else if (action == Action.DELETED) {
         client

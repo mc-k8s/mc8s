@@ -45,19 +45,19 @@ public class OnlineUserController implements Listener {
     hostname
         .getItems()
         .forEach(
-            pod -> {
-              this.kubernetesClient
-                  .resources(Pod.class)
-                  .resource(pod)
-                  .edit(
-                      pod1 -> {
-                        pod1.getMetadata()
-                            .getAnnotations()
-                            .put(
-                                "current-users", String.valueOf(this.proxyServer.getOnlineCount()));
-                        return pod1;
-                      });
-            });
+            pod ->
+                this.kubernetesClient
+                    .resources(Pod.class)
+                    .resource(pod)
+                    .edit(
+                        pod1 -> {
+                          pod1.getMetadata()
+                              .getAnnotations()
+                              .put(
+                                  "current-users",
+                                  String.valueOf(this.proxyServer.getOnlineCount()));
+                          return pod1;
+                        }));
   }
 
   @EventHandler

@@ -36,5 +36,6 @@ repositories {
 dependencies {
     implementation("io.javaoperatorsdk:operator-framework:4.1.1")
     implementation("io.fabric8:crd-generator-apt:6.2.0")
+    testImplementation("org.apache.logging.log4j:log4j-slf4j-impl:2.20.0")
     annotationProcessor("io.fabric8:crd-generator-apt:6.2.0")
 }

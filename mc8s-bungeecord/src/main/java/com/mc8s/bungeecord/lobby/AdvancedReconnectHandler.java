@@ -1,6 +1,5 @@
 package com.mc8s.bungeecord.lobby;
 
-import com.mc8s.bungeecord.server.GameServer;
 import com.mc8s.bungeecord.server.PodWatcher;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.ReconnectHandler;
@@ -9,9 +8,6 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
 
 /**
  * @author Aventix created at: 23.11.2022
@@ -29,15 +25,16 @@ public class AdvancedReconnectHandler implements ReconnectHandler {
 
   @Override
   public ServerInfo getServer(ProxiedPlayer player) {
-    Optional<Map.Entry<UUID, GameServer>> optionalLobby =
-        podWatcher.getGameServers().entrySet().stream()
+    ServerInfo lobby = podWatcher.getGameServers().entrySet().stream()
             .filter(entry -> entry.getValue().getType().equalsIgnoreCase("LOBBY"))
-            .findFirst();
-    return optionalLobby
-        .map(
-            uuidGameServerEntry ->
-                this.proxyServer.getServerInfo(uuidGameServerEntry.getKey().toString()))
-        .orElse(null);
+            .findFirst().map(uuidGameServerEntry ->
+                    this.proxyServer.getServerInfo(uuidGameServerEntry.getKey().toString())).orElse(null);
+    //TODO: Create silentlobby and premium lobby types
+    if (lobby == null) {
+      player.disconnect("NEW MESSAGE IN BASE COMPONENT //:TODO");
+    }
+
+    return lobby;
   }
 
   @Override
