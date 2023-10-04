@@ -68,6 +68,7 @@ public class Mc8sPlugin extends Plugin {
     injector
         .getInstance(KubernetesClient.class)
         .resources(Pod.class)
+            .inAnyNamespace()
         .watch(injector.getInstance(PodWatcher.class));
     this.getProxy().setReconnectHandler(injector.getInstance(AdvancedReconnectHandler.class));
     this.getProxy()
