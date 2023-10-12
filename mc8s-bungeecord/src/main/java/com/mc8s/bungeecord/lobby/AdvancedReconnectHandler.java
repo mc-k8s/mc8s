@@ -25,26 +25,21 @@ public class AdvancedReconnectHandler implements ReconnectHandler {
 
   @Override
   public ServerInfo getServer(ProxiedPlayer player) {
+    System.out.println("GETTING LOBBY FOR " + player.getDisplayName());
     ServerInfo lobby =
         podWatcher.getGameServers().entrySet().stream()
-            .filter(
-                entry -> {
-                  System.out.println(
-                      entry.getKey()
-                          + " : "
-                          + entry.getValue().getType()
-                          + " : "
-                          + entry.getValue().getAddress().toString()
-                          + " : "
-                          + entry.getValue().getState().toString());
-                  return entry.getValue().getType().equalsIgnoreCase("LOBBY");
-                })
+            .filter(entry -> entry.getValue().getType().equalsIgnoreCase("LOBBY"))
             .findFirst()
             .map(
                 uuidGameServerEntry ->
                     this.proxyServer.getServerInfo(uuidGameServerEntry.getKey().toString()))
             .orElse(null);
-    // TODO: Create silentlobby and premium lobby types
+
+    System.out.println(
+        "FOUND LOBBY: "
+            + lobby.getName()
+            + " with address : "
+            + lobby.getAddress().getAddress().toString());
     if (lobby == null) {
       player.disconnect("NEW MESSAGE IN BASE COMPONENT //:TODO");
     }
