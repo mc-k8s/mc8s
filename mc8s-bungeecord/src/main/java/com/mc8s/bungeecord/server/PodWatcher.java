@@ -65,6 +65,8 @@ public class PodWatcher implements Watcher<Pod> {
                             resource.getStatus().getPodIP(), port.getContainerPort()),
                         resource.getMetadata().getLabels().get("minecraft-template-name"),
                         false);
+
+                System.out.println("ADDED SERVER: " + resource.getStatus().getPodIP() + " with port " + port.getContainerPort() + " with template-name " + resource.getMetadata().getLabels().get("minecraft-template-name"));
                 synchronized (this.proxyServer.getServers()) {
                   this.proxyServer.getServers().put(serverInfo.getName(), serverInfo);
                 }
